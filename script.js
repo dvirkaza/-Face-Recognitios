@@ -18,7 +18,7 @@ async function start() {
     imageUpload.addEventListener('change', async () => {
         if (image) image.remove()
         if (canvas) canvas.remove()
-        image = await faceapi.bufferToImage("C:\\Users\\User\\WebstormProjects\\Auction\\Face-Recognition-JavaScript\\test_images\\1.png");
+        image = await faceapi.bufferToImage(imageUpload.files[0])
         container.append(image)
         canvas = faceapi.createCanvasFromMedia(image)
         container.append(canvas)
