@@ -18,15 +18,17 @@ async function start() {
     imageUpload.addEventListener('change', async () => {
         if (image) image.remove()
         if (canvas) canvas.remove()
-        image = await faceapi.bufferToImage(imageUpload.files[0])
+        image = await faceapi.bufferToImage("C:\\Users\\User\\WebstormProjects\\Auction\\Face-Recognition-JavaScript\\test_images\\1.png");
         container.append(image)
         canvas = faceapi.createCanvasFromMedia(image)
         container.append(canvas)
         const displaySize = { width: image.width, height: image.height }
         faceapi.matchDimensions(canvas, displaySize)
         const detections = await faceapi.detectAllFaces(image).withFaceLandmarks().withFaceDescriptors()
+        console.log(detections);
         const resizedDetections = faceapi.resizeResults(detections, displaySize)
         const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
+        console.log(results);
         results.forEach((result, i) => {
             const box = resizedDetections[i].detection.box
             const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
@@ -36,12 +38,19 @@ async function start() {
 }
 
 function loadLabeledImages() {
-    const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
+    const labels = ['Darya'];
     return Promise.all(
         labels.map(async label => {
             const descriptions = []
-            for (let i = 1; i <= 2; i++) {
-                const img = await faceapi.fetchImage(`https://raw.githubusercontent.com/WebDevSimplified/Face-Recognition-JavaScript/master/labeled_images/${label}/${i}.jpg`)
+            for (let i = 1; i <= 1; i++) {
+/*                const headers = new Headers();
+                headers.append("", "")
+                const reOp ={
+                    mode: "no-cors",
+                    headers: headers
+                }*/
+//https://github.com/dvirkaza/-Face-Recognitios/tree/master
+                const img = await faceapi.fetchImage(`./labeled_images/${label}/${i}.jpg`)
                 const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
                 descriptions.push(detections.descriptor)
             }
