@@ -1,3 +1,5 @@
+import faceapi from "./face-api.min";
+
 const imageUpload = document.getElementById('imageUpload')
 
 Promise.all([
@@ -33,26 +35,24 @@ async function start() {
             const box = resizedDetections[i].detection.box
             const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
             drawBox.draw(canvas)
+            if (result.toString() === 'Inbar') {
+                alert('inbar is found!')
+            }
         })
     })
 }
 
 function loadLabeledImages() {
-    const labels = ['Darya'];
+    const labels = ['Darya','Inbar'];
     return Promise.all(
         labels.map(async label => {
             const descriptions = []
-            for (let i = 1; i <= 1; i++) {
-/*                const headers = new Headers();
-                headers.append("", "")
-                const reOp ={
-                    mode: "no-cors",
-                    headers: headers
-                }*/
-//https://github.com/dvirkaza/-Face-Recognitios/tree/master
+            for (let i = 1; i <= 2; i++) {
                 const img = await faceapi.fetchImage(`./labeled_images/${label}/${i}.jpg`)
+                print({label})
                 const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
                 descriptions.push(detections.descriptor)
+                print(detections)
             }
 
             return new faceapi.LabeledFaceDescriptors(label, descriptions)
