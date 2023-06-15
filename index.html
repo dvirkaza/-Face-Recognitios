@@ -6,6 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script defer src="face-api.min.js"></script>
     <script defer src="script.js"></script>
+    <!-- Add the following scripts in your HTML file -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-storage.js"></script>
+
+    <script>
+        // Add your Firebase configuration here
+        var firebaseConfig = {
+            apiKey: "AIzaSyAMXFxt6MbuuTNvSr_ATRE9F2jhfDnsFBM",
+            authDomain: "facerecognition-ee28c.firebaseapp.com",
+            projectId: "facerecognition-ee28c",
+            storageBucket: "facerecognition-ee28c.appspot.com",
+            appId: "1:488956077432:web:24a65d6ae3c0a3e425148d"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Access the Firebase Storage instance
+        var storage = firebase.storage();
+    </script>
+
     <title>Face Recognition</title>
     <style>
         body {
